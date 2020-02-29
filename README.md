@@ -24,7 +24,4 @@ create table USER
     constraint TABLE_NAME_PK
         primary key (ID)
 );
-
-
-
 ```
