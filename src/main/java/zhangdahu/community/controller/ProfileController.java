@@ -10,6 +10,7 @@ import zhangdahu.community.dto.PaginationDto;
 import zhangdahu.community.model.User;
 import zhangdahu.community.service.QuestionService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
