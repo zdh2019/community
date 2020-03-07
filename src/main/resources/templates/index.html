@@ -4,6 +4,13 @@
     <title>社区主页</title>
 </head>
 <body class="body">
+<script type="application/javascript">
+    var cloasable=window.localStorage.getItem("closable");
+    if(cloasable=="true"){
+        window.close();
+        window.localStorage.removeItem("closable");
+    }
+</script>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">
     <div class="row">

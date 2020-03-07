@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zhangdahu.community.dto.PaginationDto;
 import zhangdahu.community.dto.QuestionDto;
+import zhangdahu.community.exception.CustomizeErrorCode;
+import zhangdahu.community.exception.CustomizeException;
+import zhangdahu.community.mapper.QuestionExtMapper;
 import zhangdahu.community.mapper.QuestionMapper;
 import zhangdahu.community.mapper.UserMapper;
 import zhangdahu.community.model.Question;
@@ -21,6 +24,9 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PaginationDto list(Integer page, Integer size)
     {
@@ -40,7 +46,7 @@ public class QuestionService {
         return  paginationDto;
     }
 
-    public PaginationDto listByid(Integer userId, Integer page, Integer size) {
+    public PaginationDto listByid(Long userId, Integer page, Integer size) {
         QuestionExample example = new QuestionExample();
         example.createCriteria().andCreatorEqualTo(userId);
         Integer totalCount=(int)questionMapper.countByExample(example);
@@ -62,8 +68,11 @@ public class QuestionService {
         return  paginationDto;
     }
 
-    public QuestionDto getDtoById(Integer id) {
+    public QuestionDto getDtoById(Long id) {
         Question question =questionMapper.selectByPrimaryKey(id);
+        if(question==null) {
+            throw  new CustomizeException("你找的问题不在了");
+        }
         QuestionDto questionDto = new QuestionDto();
         BeanUtils.copyProperties(question,questionDto);
         User user=userMapper.selectByPrimaryKey(question.getCreator());
@@ -71,14 +80,21 @@ public class QuestionService {
         return questionDto;
     }
 
-    public Question getById(Integer id) {
-        return questionMapper.selectByPrimaryKey(id);
+    public Question getById(Long id) {
+        Question question = questionMapper.selectByPrimaryKey(id);
+        if(question==null) {
+            throw  new CustomizeException("你找的问题不在了");
+        }
+        return question;
     }
 
     public void createOrUpdate(Question question) {
         if(question.getId()==null) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(System.currentTimeMillis());
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
             //创建
             questionMapper.insert(question);
         }else {
@@ -91,7 +107,18 @@ public class QuestionService {
             updateQuestion.setTitle(question.getTitle());
             QuestionExample example = new QuestionExample();
             example.createCriteria().andIdEqualTo(question.getId());
-            questionMapper.updateByExample(updateQuestion, example);
+            int updated=questionMapper.updateByExampleSelective(updateQuestion, example);
+            if(updated!=1)
+            {
+                throw  new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
+    }
+
+    public void incView(Long id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
