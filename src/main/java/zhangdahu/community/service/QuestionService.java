@@ -1,5 +1,6 @@
 package zhangdahu.community.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,12 @@ public class QuestionService {
     public PaginationDto list(Integer page, Integer size)
     {
         Integer totalCount=(int)questionMapper.countByExample(new QuestionExample());
-        PaginationDto paginationDto = new PaginationDto(totalCount,page,size);
+        PaginationDto<QuestionDto> paginationDto = new PaginationDto<QuestionDto>(totalCount,page,size);
         Integer offset=size*(paginationDto.getCurrentPage()-1);
-        List<Question> questions =questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(),new RowBounds(offset,size));
+
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
+        List<Question> questions =questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample,new RowBounds(offset,size));
         List<QuestionDto> questionDtoList=new ArrayList<>();
         for (Question question: questions) {
             User user=userMapper.selectByPrimaryKey(question.getCreator());
@@ -42,7 +46,7 @@ public class QuestionService {
             dto.setUser(user);
             questionDtoList.add(dto);
         }
-        paginationDto.setQuestions(questionDtoList);
+        paginationDto.setDatas(questionDtoList);
         return  paginationDto;
     }
 
@@ -50,7 +54,7 @@ public class QuestionService {
         QuestionExample example = new QuestionExample();
         example.createCriteria().andCreatorEqualTo(userId);
         Integer totalCount=(int)questionMapper.countByExample(example);
-        PaginationDto paginationDto = new PaginationDto(totalCount,page,size);
+        PaginationDto<QuestionDto> paginationDto = new PaginationDto<QuestionDto>(totalCount,page,size);
         Integer offset=size*(paginationDto.getCurrentPage()-1);
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(userId);
@@ -64,7 +68,7 @@ public class QuestionService {
             dto.setUser(user);
             questionDtoList.add(dto);
         }
-        paginationDto.setQuestions(questionDtoList);
+        paginationDto.setDatas(questionDtoList);
         return  paginationDto;
     }
 
@@ -120,5 +124,16 @@ public class QuestionService {
         question.setId(id);
         question.setViewCount(1);
         questionExtMapper.incView(question);
+    }
+
+    public List<Question> selectRelated(QuestionDto questionDto) {
+        if(StringUtils.isBlank(questionDto.getTag())) {
+            return new ArrayList<>();
+        }
+        String[] tags=StringUtils.split(questionDto.getTag(),",");
+        Question question=new Question();
+        question.setId(questionDto.getId());
+        question.setTag(StringUtils.join(tags,'|'));
+        return  questionExtMapper.selectRelated(question);
     }
 }

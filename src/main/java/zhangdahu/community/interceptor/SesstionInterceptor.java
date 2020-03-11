@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import zhangdahu.community.mapper.UserMapper;
 import zhangdahu.community.model.User;
 import zhangdahu.community.model.UserExample;
+import zhangdahu.community.service.NotificationService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,8 @@ import java.util.List;
 
 @Service
 public class SesstionInterceptor implements HandlerInterceptor {
-
+    @Autowired
+    private NotificationService notificationService;
     @Autowired
     private UserMapper userMapper;
     @Override
@@ -32,6 +34,8 @@ public class SesstionInterceptor implements HandlerInterceptor {
                     List<User> users=userMapper.selectByExample(userExample);
                     if (users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
+                        long unreadCount = notificationService.unreadCount(users.get(0).getId());
+                        request.getSession().setAttribute("unreadCount",unreadCount);
                     }
                     break;
                 }

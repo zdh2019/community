@@ -1,5 +1,6 @@
 package zhangdahu.community.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import zhangdahu.community.cache.TagCache;
 import zhangdahu.community.mapper.QuestionMapper;
 import zhangdahu.community.model.Question;
 import zhangdahu.community.model.User;
@@ -21,7 +23,8 @@ public class PublishController {
     private QuestionService questionService;
 
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        model.addAttribute("taglist", TagCache.getTags());
         return "publish";
     }
 
@@ -34,6 +37,7 @@ public class PublishController {
         model.addAttribute("description",question.getDescription());
         model.addAttribute("tag",question.getTag());
         model.addAttribute("id",question.getId());
+        model.addAttribute("taglist", TagCache.getTags());
         return "publish";
     }
 
@@ -62,7 +66,11 @@ public class PublishController {
             model.addAttribute("error","标签不能为空");
             return "publish";
         }
-
+        String invalid=TagCache.filterInvalid(tag);
+        if(StringUtils.isBlank(invalid))
+        {
+            return "publish";
+        }
         User user=(User)request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登入哦");
@@ -73,7 +81,7 @@ public class PublishController {
         question.setId(id);
         question.setTitle(title);
         question.setDescription(description);
-        question.setTag(tag);
+        question.setTag(invalid);
         question.setCreator(user.getId());
         question.setId(id);
         questionService.createOrUpdate(question);

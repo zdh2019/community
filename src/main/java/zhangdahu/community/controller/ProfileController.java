@@ -6,17 +6,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import zhangdahu.community.dto.NotificationDto;
 import zhangdahu.community.dto.PaginationDto;
+import zhangdahu.community.model.Notification;
 import zhangdahu.community.model.User;
+import zhangdahu.community.service.NotificationService;
 import zhangdahu.community.service.QuestionService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class ProfileController {
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private NotificationService notificationService;
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name="action")String action,
                           Model model,
@@ -32,17 +38,14 @@ public class ProfileController {
         if("question".equals(action)) {
             model.addAttribute("section","question");
             model.addAttribute("sectionName","我的问题");
-        }else if("replies".equals(action))
-        {
-            model.addAttribute("section","replies");
-            model.addAttribute("sectionName","最新回复");
-        }else if("concern".equals(action))
-        {
-            model.addAttribute("section","concern");
-            model.addAttribute("sectionName","我的关注");
+            PaginationDto Pagination = questionService.listByid(user.getId(), page, size);
+            model.addAttribute("pagination",Pagination);
+        }else if("replies".equals(action)) {
+            model.addAttribute("section", "replies");
+            model.addAttribute("sectionName", "最新回复");
+            PaginationDto Pagination = notificationService.list(user.getId(), page, size);
+            model.addAttribute("pagination", Pagination);
         }
-        PaginationDto Pagination = questionService.listByid(user.getId(), page, size);
-        model.addAttribute("pagination",Pagination);
         return "profile";
     }
 }

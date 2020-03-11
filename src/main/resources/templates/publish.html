@@ -14,15 +14,34 @@
                     <input type="hidden" name="id" th:value="${id}">
                     <div class="form-group">
                         <label for="title">问题标题(简单扼要)</label>
-                        <input type="text" th:value="${title}" class="form-control" id="title" name="title" placeholder="问题标题...">
+                        <input type="text" th:value="${title}" class="form-control" id="title" name="title"
+                               placeholder="问题标题..." autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="description">问题补充(必填)</label>
-                        <textarea class="form-control" th:text="${description}" name="description" id="description" cols="30" rows="10"></textarea>
+                        <textarea class="form-control" th:text="${description}" name="description" id="description" cols="30"
+                                  rows="10" autocomplete="off"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="tag">添加标签:</label>
-                        <input type="text" th:value="${tag}" class="form-control" id="tag" name="tag" placeholder="输入标签以逗号隔开">
+                        <input type="text" th:value="${tag}" class="form-control" id="tag" name="tag"
+                               placeholder="输入标签以逗号隔开" autocomplete="off"
+                               onclick="showTags()">
+                        <div id="select_tags" class="selectTag" style="display: none">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:each="selecttag,tagStatus:${taglist}" th:class="${tagStatus.first?'active':''}" >
+                                    <a th:href="${'#'+selecttag.categoryName}" aria-controls="home" role="tab"
+                                       th:text="${selecttag.categoryName}" data-toggle="tab">开发语言</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" style="margin-top: 10px"  th:class="${tagStatus.first?'tab-pane active':'tab-pane'}" th:id="${selectCategory.categoryName}" th:each="selectCategory,tagStatus:${taglist}">
+                                    <span class="glyphicon glyphicon-tags label label-info communityTag" th:text="${' '+tag}" th:each="tag :${selectCategory.tags}"
+                                          onclick="selectTag(this)" th:data-tag="${tag}"></span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="container-fluid main">
                         <div class="row">

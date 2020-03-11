@@ -25,6 +25,12 @@
     padding-top: 10px;
 }
 
+.media-body .twolevel-comment{
+    margin-top: 15px;
+    border: 1px solid #999;
+    padding-top: 15px;
+    border-radius: 10px;
+}
 
 .text-desc {
     font-size: 12px;
@@ -73,6 +79,11 @@
     font-size: 15px;
     cursor: pointer;
 }
+
+.menu .active {
+    color: #499ef3;
+}
+
 .menu .icon:hover{
     color: #499ef3;
 }
@@ -81,4 +92,20 @@
     padding-bottom: 5px;
     margin-bottom: 15px;
     border-bottom: 1px solid #eee;
+}
+
+.btn-twolevel-comment{
+    float: right;
+    margin: 0px 15px 10px 10px;
+}
+
+.selectTag {
+    border: 1px solid #999;
+    padding-bottom: 30px;
+    font-size: 5px;
+}
+
+.communityTag {
+    margin: 10px;
+    display: inline-block;
 }
