@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/common_header :: common_header(~{::title})">
+<head th:replace="common/common_header :: common_header(~{::title},~{})">
     <title>我的问题</title>
 </head>
 <body class="body">
@@ -85,7 +85,7 @@
         </div>
     </div>
 </div>
-
-<div th:replace="common/common_foot :: foot"></div>
+<div th:insert="~{footer :: nav}"></div>
 </body>
+<div th:replace="common/common_foot :: foot"></div>
 </html>

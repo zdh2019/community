@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="common_header(title)">
+<head th:fragment="common_header(title,links)">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title th:replace="${title}">社区</title>
@@ -9,5 +9,6 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/my.css">
     <!--/* Per-page placeholder for additional links */-->
+    <th:block th:replace="${links}" />
 </head>
 </html>

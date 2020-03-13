@@ -109,3 +109,8 @@
     margin: 10px;
     display: inline-block;
 }
+
+.footer{
+    padding: 15px 40%;
+    color: #999999;
+}
