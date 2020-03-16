@@ -36,9 +36,12 @@ public class QuestionController {
         List<CommentDto> comments=commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         List<Question> relatedQuestions=questionService.selectRelated(questionDto);
         User user=(User)request.getSession().getAttribute("user");
-        if(!questionDto.getCreator().equals(user.getId()))
+        if(user!=null)
         {
-            questionService.incView(id);
+            if(!questionDto.getCreator().equals(user.getId()))
+            {
+                questionService.incView(id);
+            }
         }
         model.addAttribute("question",questionDto);
         model.addAttribute("comments",comments);
