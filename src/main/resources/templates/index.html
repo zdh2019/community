@@ -29,7 +29,6 @@
                     <h4 class="media-heading title">
                         <a th:href="@{'/question/'+${question.getId()}}" th:text="${question.getTitle()}"></a></li>
                     </h4>
-                    <span th:text="${question.description}"></span><br>
                     <span class="text-desc" th:text="${question.getCommentCount()}+'个回复'"></span>
                     <span class="text-desc" th:text="${question.getViewCount()}+'次浏览'"></span>
                     <span class="text-desc" th:text="${#calendars.format(question.getGmtCreate(),'yyyy-MM-dd HH:mm')}">小时前</span>
