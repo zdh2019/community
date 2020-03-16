@@ -2,6 +2,7 @@ package zhangdahu.community.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +11,12 @@ import zhangdahu.community.dto.CommentDto;
 import zhangdahu.community.dto.QuestionDto;
 import zhangdahu.community.enums.CommentTypeEnum;
 import zhangdahu.community.model.Question;
+import zhangdahu.community.model.User;
 import zhangdahu.community.service.CommentService;
 import zhangdahu.community.service.QuestionService;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,11 +30,16 @@ public class QuestionController {
 
     @GetMapping("/question/{id}")
     public String Question(@PathVariable(name="id")Long id,
-                           Model model){
+                           Model model,
+                           HttpServletRequest request){
         QuestionDto questionDto = questionService.getDtoById(id);
         List<CommentDto> comments=commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         List<Question> relatedQuestions=questionService.selectRelated(questionDto);
-        questionService.incView(id);
+        User user=(User)request.getSession().getAttribute("user");
+        if(!questionDto.getCreator().equals(user.getId()))
+        {
+            questionService.incView(id);
+        }
         model.addAttribute("question",questionDto);
         model.addAttribute("comments",comments);
         model.addAttribute("relatedquestions",relatedQuestions);

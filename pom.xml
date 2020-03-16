@@ -21,6 +21,7 @@
         <java.version>1.8</java.version>
     </properties>
 
+
     <dependencies>
         <!--依赖包 -->
         <dependency><!--groupId，artifactId和version来定义唯一的一个maven项目  -->
