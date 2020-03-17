@@ -70,7 +70,4 @@ public class UCloudProvider {
         }
     }
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> e074fcb6ff5274c1d9e78c38709bf255c5e3337f
