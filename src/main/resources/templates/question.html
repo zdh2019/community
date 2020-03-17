@@ -7,7 +7,7 @@
 <div th:insert="~{navigation :: nav}"></div>
 <div class="layui-div">
     <div class="layui-row fluid-row">
-        <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md9 view_left">
             <!--正文-->
             <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <h2><span class="title" th:text="${question.getTitle()}" aria-hidden="true"></span></h2>
@@ -105,7 +105,7 @@
             </div>
         </div>
         <!--右边-->
-        <div class="layui-col-xs12 layui-col-sm12 layui-col-md3">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md3 view_right">
             <div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin-top: 20px">
                 <h3>发起人</h3>
                 <div class="media"><!---->
