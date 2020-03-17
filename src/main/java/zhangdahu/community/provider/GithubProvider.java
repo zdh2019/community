@@ -34,7 +34,11 @@ public class GithubProvider {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.github.com/user")
+<<<<<<< HEAD
 		.header("Authorization","token "+accessToken)
+=======
+                .header("Authorization","token "+accessToken)
+>>>>>>> e074fcb6ff5274c1d9e78c38709bf255c5e3337f
                 .build();
         try {
             Response response = client.newCall(request).execute();

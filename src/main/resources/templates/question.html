@@ -5,11 +5,11 @@
 </head>
 <body class="body">
 <div th:insert="~{navigation :: nav}"></div>
-<div class="container-fluid main">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+<div class="layui-div">
+    <div class="layui-row fluid-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
             <!--正文-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <h2><span class="title" th:text="${question.getTitle()}" aria-hidden="true"></span></h2>
                 <span class="text-desc">
                 作者:<span class="text-desc" th:text="${question.user.getName()}"></span>
@@ -17,31 +17,31 @@
                    发布时间:<span class="text-desc"
                            th:text="${#calendars.format(question.getGmtCreate(),'yyyy-MM-dd HH:mm')}"></span>
             </span>
-                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <hr class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <!--内容-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " id="text-view">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12" id="text-view">
                     <textarea class="text-description" th:text="${question.description}"></textarea>
                 </div>
-                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <hr class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <!--标签-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                     <span>标签:</span>
                     <span th:each="tag:${question.tag.split(',')}">
                         <span class="glyphicon glyphicon-tags label label-info" th:text="${' '+tag}"></span>
                     </span>
                 </div>
-                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 my-menu">
+                <hr class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 my-menu">
                     <a th:href="@{'/publish/'+${question.getId()}}"
                        th:if="${session.user!=null&&session.user.id==question.creator}">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑
                     </a>
                 </div>
-                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <hr class="layui-col-xs12 layui-col-sm12 layui-col-md12">
             </div>
             <!--回复框-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                     <div class="media"><!---->
                         <div class="media-left">
                             <a href="#">
@@ -62,13 +62,13 @@
                 </div>
             </div>
             <!--回复列表-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <h3>
                     <span th:text="${(comments==null?0:comments.size())+'个回复'}"></span>
                 </h3>
-                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <hr class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <!--列表-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments" th:each="comment :${comments}">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 comments" th:each="comment :${comments}">
                     <div class="media"><!---->
                         <div class="media-left">
                             <a href="#">
@@ -89,10 +89,10 @@
                                       th:text="${#calendars.format(comment.gmtCreate,'yyyy-MM-dd')}"></span>
                                 </span>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse twolevel-comment"
+                            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 collapse twolevel-comment"
                                  th:id="${'comment-'+comment.id}">
                                 <!--二级评论-->
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                                     <textarea placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论"
                                                   class="form-control commentarea" th:id="${'comara-'+comment.id}" rows="2"></textarea>
                                     <button type="button" class="btn btn-success btn-twolevel-comment"  onclick="">取消</button>
@@ -105,8 +105,8 @@
             </div>
         </div>
         <!--右边-->
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="margin-top: 20px">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md3">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12" style="margin-top: 20px">
                 <h3>发起人</h3>
                 <div class="media"><!---->
                     <div class="media-left">
@@ -121,9 +121,9 @@
                         </h4>
                     </div>
                 </div>
-                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <hr class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                 <h3>相关问题</h3>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
                     <ul class="list-group" >
                         <li  th:each="requestion:${relatedquestions}">
                             <a th:href="@{'/question/'+${requestion.getId()}}" th:text="${requestion.title}"></a>

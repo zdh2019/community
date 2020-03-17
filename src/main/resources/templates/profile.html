@@ -5,9 +5,9 @@
 </head>
 <body class="body">
 <div th:insert="~{navigation :: nav}"></div>
-<div class="container-fluid main">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+<div class="layui-div">
+    <div class="layui-row fluid-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
             <h2><span class="title" th:text="${sectionName}" aria-hidden="true"></span></h2>
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section=='question'}">
@@ -20,7 +20,6 @@
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading title" th:text="${question.getTitle()}"></h4>
-                        <span th:text="${question.description}"></span><br>
                         <span class="text-desc" th:text="${question.getCommentCount()}+'个回复'"></span>
                         <span class="text-desc" th:text="${question.getViewCount()}+'次浏览'"></span>
                         <span class="text-desc" th:text="${#calendars.format(question.getGmtCreate(),'yyyy-MM-dd HH:mm')}">小时前</span>
@@ -73,7 +72,7 @@
                 </nav>
             </div>
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md3">
             <div class="list-group " style="margin-top: 50px">
                 <a href="/profile/question"
                    th:class="${section=='question'}?'active list-group-item':'list-group-item'">我的问题</a>

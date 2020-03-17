@@ -3,12 +3,21 @@
 <head th:fragment="common_header(title,links)">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<<<<<<< HEAD
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximun-scale=1.0,user-scalable=0">
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+>>>>>>> e074fcb6ff5274c1d9e78c38709bf255c5e3337f
     <title th:replace="${title}">社区</title>
     <!-- Common styles and scripts -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/my.css">
+<!--    layui-->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
     <!--/* Per-page placeholder for additional links */-->
     <th:block th:replace="${links}" />
 </head>

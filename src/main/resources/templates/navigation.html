@@ -3,6 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="nav">
+<<<<<<< HEAD
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -50,11 +51,31 @@
             </div>
         </div>
     </nav>
+=======
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="/">我的社区</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/publish" th:if="${session.user!=null}" >提问</a>
+        </li>
+        <li class="layui-nav-item" lay-unselect=""  th:if="${session.user!=null}">
+            <a href="javascript:;"><img class="layui-nav-img" th:src="${session.user.getAvatarUrl()}">我</a>
+            <dl class="layui-nav-child">
+                <dd><a href="/profile/question">我的问题</a></dd>
+                <dd><a href="/profile/replies">我的通知</a></dd>
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item" th:if="${session.user==null}">
+            <a th:href="@{https://github.com/login/oauth/authorize(client_id='cacfbb57cb07b3291cfa',redirect_uri=${#httpServletRequest.getServletContext().getAttribute('redirectUri')},scope='user',state=1)}">登入</a>
+        </li>
+    </ul>
+>>>>>>> e074fcb6ff5274c1d9e78c38709bf255c5e3337f
 </div>
-
 </body>
-
 </html>
+<<<<<<< HEAD
 
 </li>
                 </ul>
@@ -65,3 +86,5 @@
 </body>
 
 </html>
+=======
+>>>>>>> e074fcb6ff5274c1d9e78c38709bf255c5e3337f
