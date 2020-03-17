@@ -114,3 +114,14 @@
     padding: 15px 40%;
     color: #999999;
 }
+
+.layui-div{
+    position: relative;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.fluid-row{
+    background-color: #ffffff;
+    padding: 20px;
+}

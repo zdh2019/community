@@ -6,9 +6,9 @@
 </head>
 <body class="body">
 <div th:insert="~{navigation :: nav}"></div>
-    <div class="container-fluid main">
-        <div class="row">
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+<div class="layui-div">
+    <div class="layui-row fluid-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
                 <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 发起</h2>
                 <hr>
                 <form action="/publish" method="post">
@@ -56,7 +56,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md3">
                 <h3>问题发布指南</h3>
                 ●问题标题:请用精简的语言描述您发布的问题，不超过25字<br>
                 ●问题补充:详细补充您的问题内容，并确保问题描述清晰直观，并提供些相关的资料<br>
@@ -85,5 +85,15 @@
         });
     </script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use('element', function(){
+            var element = layui.element;
+            element.on('nav(demo)', function(elem){
+                //console.log(elem)
+                layer.msg(elem.text());
+            });
+        });
+    </script>
 </div>
 </html>

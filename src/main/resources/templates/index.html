@@ -12,63 +12,66 @@
     }
 </script>
 <div th:insert="~{navigation :: nav}"></div>
-<div class="container-fluid main">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
-            <hr>
 
-            <div class="media"  th:each="question :${pagination.datas}"><!---->
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-rounded"
-                             th:src="${question.getUser().getAvatarUrl()}">
-                    </a>
+
+<div class="layui-div">
+    <div class="layui-row fluid-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
+            <div class="grid-demo grid-demo-bg1">
+                <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
+                <hr>
+
+                <div class="media"  th:each="question :${pagination.datas}"><!---->
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded"
+                                 th:src="${question.getUser().getAvatarUrl()}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading title">
+                            <a th:href="@{'/question/'+${question.getId()}}" th:text="${question.getTitle()}"></a></li>
+                        </h4>
+                        <span class="text-desc" th:text="${question.getCommentCount()}+'个回复'"></span>
+                        <span class="text-desc" th:text="${question.getViewCount()}+'次浏览'"></span>
+                        <span class="text-desc" th:text="${#calendars.format(question.getGmtCreate(),'yyyy-MM-dd HH:mm')}">小时前</span>
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading title">
-                        <a th:href="@{'/question/'+${question.getId()}}" th:text="${question.getTitle()}"></a></li>
-                    </h4>
-                    <span th:text="${question.description}"></span><br>
-                    <span class="text-desc" th:text="${question.getCommentCount()}+'个回复'"></span>
-                    <span class="text-desc" th:text="${question.getViewCount()}+'次浏览'"></span>
-                    <span class="text-desc" th:text="${#calendars.format(question.getGmtCreate(),'yyyy-MM-dd HH:mm')}">小时前</span>
-                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="?page=1" th:hidden="${!pagination.isHasFirstPage_B()}" aria-label="Previous">
+                                <span>&lt;&lt;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/(page=${pagination.getCurrentPage()- 1})}"
+                               th:hidden="${!pagination.isHasPrevious_B()}" aria-label="Previous">
+                                <span>&lt;</span>
+                            </a>
+                        </li>
+
+                        <li th:each="page: ${pagination.pages}" th:class="${pagination.getCurrentPage()==page}?'active':''">
+                            <a th:href="@{/(page=${page})}" th:text="${page}"></a></li>
+
+
+                        <li>
+                            <a th:href="@{/(page=${pagination.getCurrentPage()+ 1})}"
+                               th:hidden="${!pagination.isHasNext_B()}" aria-label="Next">
+                                <span>&gt;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/(page=${pagination.getTotalPage()})}" th:hidden="${!pagination.isHasEndPage_B()}"
+                               aria-label="Next">
+                                <span>&gt;&gt;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li>
-                        <a href="?page=1" th:hidden="${!pagination.isHasFirstPage_B()}" aria-label="Previous">
-                            <span>&lt;&lt;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/(page=${pagination.getCurrentPage()- 1})}"
-                           th:hidden="${!pagination.isHasPrevious_B()}" aria-label="Previous">
-                            <span>&lt;</span>
-                        </a>
-                    </li>
-
-                    <li th:each="page: ${pagination.pages}" th:class="${pagination.getCurrentPage()==page}?'active':''">
-                        <a th:href="@{/(page=${page})}" th:text="${page}"></a></li>
-
-
-                    <li>
-                        <a th:href="@{/(page=${pagination.getCurrentPage()+ 1})}"
-                           th:hidden="${!pagination.isHasNext_B()}" aria-label="Next">
-                            <span>&gt;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/(page=${pagination.getTotalPage()})}" th:hidden="${!pagination.isHasEndPage_B()}"
-                           aria-label="Next">
-                            <span>&gt;&gt;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md3">
             <h3>热门话题</h3>
         </div>
     </div>

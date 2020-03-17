@@ -4,5 +4,15 @@
     <script src="/js/jquery.min.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use('element', function(){
+            var element = layui.element;
+            element.on('nav(demo)', function(elem){
+                //console.log(elem)
+                layer.msg(elem.text());
+            });
+        });
+    </script>
 </head>
 </html>
